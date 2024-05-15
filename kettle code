@@ -1,0 +1,36 @@
+#include <GL/freeglut.h>
+#include <math.h>
+
+float teapotRotation = 0.0; 
+void myDisplay();
+void rotateTeapot();
+
+int main(int ac, char** av) {
+    glutInit(&ac, av);
+    glutInitDisplayMode(GLUT_RGB);
+    glutCreateWindow("나의 하늘");
+    glutDisplayFunc(myDisplay);
+    glutIdleFunc(rotateTeapot);
+    glutMainLoop();
+}
+
+void myDisplay() {
+    glClearColor(1, 1, 1, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glColor3f(0, 0, 0);
+    glPushMatrix();
+    glRotatef(teapotRotation, 0, 0.1, 0);
+    glutWireTeapot(0.5);
+    glPopMatrix();
+
+    glFlush();
+}
+
+void rotateTeapot() {
+    teapotRotation += 0.1;
+    if (teapotRotation > 360.0) {
+        teapotRotation -= 360.0; 
+    }
+    glutPostRedisplay(); 
+}
